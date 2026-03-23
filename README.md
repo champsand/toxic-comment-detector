@@ -54,12 +54,6 @@ Frontend (Vercel) → FastAPI Backend (Railway) → ML Model
 <img width="1919" height="941" alt="image" src="https://github.com/user-attachments/assets/e2570c10-efbb-4026-aff2-2a9ee4e32817" />
 <img width="1919" height="943" alt="image" src="https://github.com/user-attachments/assets/172780d9-0451-49d9-9205-28dd84d0ca42" />
 
-```
-screenshots/
-├── ui.png
-├── result.png
-```
-
 ---
 
 ## 🧪 Run Locally
