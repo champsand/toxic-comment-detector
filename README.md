@@ -1,13 +1,21 @@
-# Toxic Comment Detection System
+# 🧠 Toxic Comment Detection System
 
-A full-stack AI application that detects toxic comments using Machine Learning (TF-IDF + Logistic Regression) with a FastAPI backend and simple frontend interface.
+A full-stack AI web application that detects toxic comments using Machine Learning (TF-IDF + Logistic Regression), powered by a FastAPI backend and a lightweight frontend interface.
 
 ---
 
-# Toxic Comment Detection System
+## 🌐 Live Demo
 
-🌐 Live Demo: https://toxic-comment-detector-msutiono.vercel.app
-🔗 API: toxic-comment-detector-msutiono.up.railway.app
+👉 https://toxic-comment-detector-msutiono.vercel.app
+🔗 API Endpoint: https://toxic-comment-detector-msutiono.up.railway.app
+
+---
+
+## 🏗️ Architecture
+
+```
+Frontend (Vercel) → FastAPI Backend (Railway) → ML Model
+```
 
 ---
 
@@ -15,9 +23,9 @@ A full-stack AI application that detects toxic comments using Machine Learning (
 
 * Detect toxic vs non-toxic comments
 * Confidence score for predictions
-* FastAPI backend API
-* Lightweight frontend interface
-* Clean modular project structure
+* Real-time API interaction
+* Clean and responsive UI
+* Modular and scalable project structure
 
 ---
 
@@ -25,24 +33,41 @@ A full-stack AI application that detects toxic comments using Machine Learning (
 
 * **Machine Learning:** Scikit-learn, TF-IDF, Logistic Regression
 * **Backend:** FastAPI
-* **Frontend:** HTML, JavaScript
+* **Frontend:** HTML, CSS, JavaScript
 * **Tools:** Python, Joblib
+
+---
+
+## ⚙️ How It Works
+
+1. User inputs a comment in the frontend
+2. Frontend sends a POST request to the FastAPI backend
+3. Backend preprocesses the text
+4. TF-IDF vectorizer transforms the input
+5. Logistic Regression model predicts toxicity
+6. Result is returned with a confidence score
 
 ---
 
 ## 📸 Screenshots
 
-COMING SOON
+*(Add screenshots here for better presentation)*
+
+```
+screenshots/
+├── ui.png
+├── result.png
+```
 
 ---
 
 ## 🎥 Demo
 
-COMING SOON
+*(Optional: Add demo video link here)*
 
 ---
 
-## ⚙️ How to Run Locally
+## 🧪 Run Locally
 
 1. Clone the repository:
 
@@ -63,7 +88,7 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-4. Open frontend:
+4. Open the frontend:
 
 * Open `frontend/index.html` in your browser
 
@@ -97,11 +122,13 @@ Response:
 ```
 toxic-comment-detector/
 │
-├── app/            # FastAPI backend + model
+├── app/            # FastAPI backend + trained model
 ├── training/       # Model training script
-├── frontend/       # UI
+├── frontend/       # Frontend UI
+├── screenshots/    # UI previews (optional)
 ├── requirements.txt
 ├── README.md
+├── .gitignore
 ```
 
 ---
@@ -109,10 +136,12 @@ toxic-comment-detector/
 ## ⚠️ Notes
 
 * Dataset is not included due to size limitations
+* Backend is hosted on Railway (may have cold start delay)
 * Model is pre-trained and included for immediate use
 
 ---
 
 ## 👤 Author
 
-Matthew Sutiono — Computer Science Student
+**Matthew Sutiono**
+Computer Science Student
