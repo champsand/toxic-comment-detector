@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toxic Comment Detector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080808;
+      --panel: #121212;
+      --panel-border: #242424;
+      --text: #f5f5f5;
+      --muted: #a2a2a2;
+      --accent: #d6d6d6;
+      --danger: #ff4d4f;
+      --success: #22c55e;
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 38%),
+        radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.04), transparent 32%),
+        var(--bg);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .app {
+      width: min(100%, 680px);
+      background: linear-gradient(180deg, #161616 0%, #101010 100%);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .title {
+      margin: 0 0 6px;
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .input-area {
+      width: 100%;
+      min-height: 160px;
+      resize: vertical;
+      border: 1px solid #2b2b2b;
+      border-radius: 12px;
+      background: #0d0d0d;
+      color: var(--text);
+      font: inherit;
+      line-height: 1.55;
+      padding: 14px 16px;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+      outline: none;
+    }
+
+    .input-area::placeholder {
+      color: #767676;
+    }
+
+    .input-area:focus {
+      border-color: #636363;
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.1),
+        0 0 20px rgba(255, 255, 255, 0.08);
+    }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 20px;
+      background: #f5f5f5;
+      color: #121212;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      will-change: transform;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.36);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(0) scale(0.98);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn.is-pressed:not(:disabled) {
+      animation: analyzeTap 240ms ease;
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .feedback {
+      margin-top: 16px;
+      min-height: 24px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .feedback.error {
+      color: var(--danger);
+    }
+
+    .feedback.loading {
+      color: var(--accent);
+    }
+
+    .result {
+      margin-top: 10px;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #2a2a2a;
+      background: #0c0c0c;
+      display: none;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(8px) scale(0.985);
+      transform-origin: top center;
+    }
+
+    .result.visible {
+      display: grid;
+      animation: resultReveal 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .result .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .row .key {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .value {
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      transition: color 220ms ease, text-shadow 220ms ease;
+    }
+
+    .value.toxic {
+      color: var(--danger);
+      text-shadow: 0 0 12px rgba(255, 77, 79, 0.28);
+    }
+
+    .value.non-toxic {
+      color: var(--success);
+      text-shadow: 0 0 12px rgba(34, 197, 94, 0.26);
+    }
+
+    @keyframes resultReveal {
+      from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes analyzeTap {
+      0% {
+        transform: scale(1);
+      }
+      45% {
+        transform: scale(0.97);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn,
+      .input-area,
+      .value {
+        transition: none;
+      }
+
+      .result.visible,
+      .btn.is-pressed:not(:disabled) {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 14px;
+      }
+
+      .app {
+        padding: 20px;
+      }
+
+      .actions {
+        justify-content: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <h1 class="title">Toxic Comment Detection</h1>
+    <p class="subtitle">Paste any text and run instant toxicity analysis.</p>
+
+    <textarea
+      id="commentInput"
+      class="input-area"
+      placeholder="Write or paste a comment..."
+      aria-label="Comment input"
+    ></textarea>
+
+    <div class="actions">
+      <button id="analyzeBtn" class="btn" type="button">Analyze</button>
+    </div>
+
+    <p id="feedback" class="feedback" aria-live="polite"></p>
+
+    <section id="resultCard" class="result" aria-live="polite">
+      <div class="row">
+        <span class="key">Label</span>
+        <span id="labelValue" class="value"></span>
+      </div>
+      <div class="row">
+        <span class="key">Confidence</span>
+        <span id="confidenceValue" class="value"></span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const API_URL = "http://127.0.0.1:8000/predict";
+
+    const commentInput = document.getElementById("commentInput");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const feedback = document.getElementById("feedback");
+    const resultCard = document.getElementById("resultCard");
+    const labelValue = document.getElementById("labelValue");
+    const confidenceValue = document.getElementById("confidenceValue");
+
+    function setFeedback(message, type = "") {
+      feedback.textContent = message;
+      feedback.className = `feedback ${type}`.trim();
+    }
+
+    function setLoading(isLoading) {
+      analyzeBtn.disabled = isLoading;
+      analyzeBtn.textContent = isLoading ? "Analyzing..." : "Analyze";
+      if (isLoading) {
+        setFeedback("Analyzing...", "loading");
+      }
+    }
+
+    function showResult(label, confidence) {
+      const normalizedLabel = label === "toxic" ? "toxic" : "non-toxic";
+      const confidencePct = (confidence * 100).toFixed(2) + "%";
+
+      labelValue.textContent = normalizedLabel;
+      labelValue.className = `value ${normalizedLabel}`;
+      confidenceValue.textContent = confidencePct;
+      confidenceValue.className = "value";
+
+      resultCard.classList.add("visible");
+    }
+
+    async function analyzeComment() {
+      const text = commentInput.value.trim();
+
+      analyzeBtn.classList.add("is-pressed");
+      setTimeout(() => {
+        analyzeBtn.classList.remove("is-pressed");
+      }, 240);
+
+      resultCard.classList.remove("visible");
+      labelValue.textContent = "";
+      confidenceValue.textContent = "";
+
+      if (!text) {
+        setFeedback("Please enter some text before analyzing.", "error");
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ text })
+        });
+
+        if (!response.ok) {
+          let errorMessage = "Request failed. Please try again.";
+          try {
+            const errorData = await response.json();
+            if (errorData && errorData.detail) {
+              errorMessage = String(errorData.detail);
+            }
+          } catch (_) {
+            // Keep the fallback error message if JSON parsing fails.
+          }
+          throw new Error(errorMessage);
+        }
+
+        const data = await response.json();
+
+        if (typeof data.label !== "string" || typeof data.confidence !== "number") {
+          throw new Error("Unexpected response format from server.");
+        }
+
+        showResult(data.label.toLowerCase(), data.confidence);
+        setFeedback("Analysis complete.");
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Something went wrong.";
+        setFeedback(message, "error");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    analyzeBtn.addEventListener("click", analyzeComment);
+
+    commentInput.addEventListener("keydown", (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+        analyzeComment();
+      }
+    });
+  </script>
+</body>
+</html>
