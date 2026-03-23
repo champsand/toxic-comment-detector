@@ -114,7 +114,6 @@ toxic-comment-detector/
 ├── app/            # FastAPI backend + trained model
 ├── training/       # Model training script
 ├── frontend/       # Frontend UI
-├── screenshots/    # UI previews (optional)
 ├── requirements.txt
 ├── README.md
 ├── .gitignore
@@ -132,5 +131,4 @@ toxic-comment-detector/
 
 ## 👤 Author
 
-**Matthew Sutiono**
-Computer Science Student
+**Matthew Sutiono** - Computer Science Student
