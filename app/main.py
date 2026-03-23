@@ -37,10 +37,8 @@ def home():
 def predict(input: TextInput):
     cleaned = preprocess(input.text)
     vector = vectorizer.transform([cleaned])
-
     proba = model.predict_proba(vector)[0][1]
     prediction = 1 if proba > 0.65 else 0
-
     label = "toxic" if prediction == 1 else "non-toxic"
 
     return {
