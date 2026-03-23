@@ -1,139 +1,111 @@
-# 🚀 Toxic Comment Detection System
+# Toxic Comment Detection System
 
-A full-stack AI application that detects whether a comment is toxic or non-toxic using machine learning.
-
----
-
-## 🧠 Features
-
-* Text classification using Logistic Regression
-* TF-IDF vectorization (1–3 n-grams)
-* FastAPI backend for real-time predictions
-* Clean frontend with modern UI & animations
-* Confidence score output
+A full-stack AI application that detects toxic comments using Machine Learning (TF-IDF + Logistic Regression) with a FastAPI backend and simple frontend interface.
 
 ---
 
-## Dataset
+## 🚀 Features
 
-Dataset is not included due to size.
-Download it from:
-https://www.kaggle.com/datasets/waalbannyantudre/hate-speech-detection-curated-dataset
-
----
-
-## 🏗️ Tech Stack
-
-* Python (scikit-learn, pandas, numpy)
-* FastAPI
-* HTML, CSS, JavaScript
-* Uvicorn
+* Detect toxic vs non-toxic comments
+* Confidence score for predictions
+* FastAPI backend API
+* Lightweight frontend interface
+* Clean modular project structure
 
 ---
 
-## 📂 Project Structure
+## 🧠 Tech Stack
 
-```
-toxic-comment-detector/
-│
-├── app/
-│   ├── main.py
-│   ├── model.pkl
-│   ├── vectorizer.pkl
-│
-├── training/
-│   └── train_model.py
-│
-├── frontend/
-│   └── index.html
-│
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
+* **Machine Learning:** Scikit-learn, TF-IDF, Logistic Regression
+* **Backend:** FastAPI
+* **Frontend:** HTML, JavaScript
+* **Tools:** Python, Joblib
+
+---
+
+## 📸 Screenshots
+
+COMING SOON
+
+---
+
+## 🎥 Demo
+
+COMING SOON
 
 ---
 
 ## ⚙️ How to Run Locally
 
-### 1. Create virtual environment
+1. Clone the repository:
 
+```bash
+git clone https://github.com/champsand/toxic-comment-detector.git
+cd toxic-comment-detector
 ```
-python -m venv venv
-venv\Scripts\activate
-```
 
----
+2. Install dependencies:
 
-### 2. Install dependencies
-
-```
+```bash
 pip install -r requirements.txt
 ```
 
----
+3. Run the backend:
 
-### 3. Run backend
-
-```
-python -m uvicorn app.main:app --reload
+```bash
+uvicorn app.main:app --reload
 ```
 
----
+4. Open frontend:
 
-### 4. Open frontend
-
-Open:
-
-```
-frontend/index.html
-```
+* Open `frontend/index.html` in your browser
 
 ---
 
-## 🌐 API Endpoint
+## 📡 API Endpoint
 
-**POST** `/predict`
+### POST `/predict`
 
-### Request:
+Request:
 
-```
+```json
 {
-  "text": "you are stupid"
+  "text": "your comment here"
+}
+```
+
+Response:
+
+```json
+{
+  "prediction": "toxic",
+  "confidence": 0.87
 }
 ```
 
 ---
 
-### Response:
+## 📁 Project Structure
 
 ```
-{
-  "label": "toxic",
-  "confidence": 0.93
-}
+toxic-comment-detector/
+│
+├── app/            # FastAPI backend + model
+├── training/       # Model training script
+├── frontend/       # UI
+├── requirements.txt
+├── README.md
 ```
 
 ---
 
-## 📊 Model Details
+## ⚠️ Notes
 
-* Model: Logistic Regression
-* Vectorizer: TF-IDF (n-grams up to 3)
-* Dataset: Toxic comment dataset
-* Accuracy: ~0.83–0.87
+* Dataset is not included due to size limitations
+* Model is pre-trained and included for immediate use
 
 ---
 
-## 🚀 Future Improvements
+## 👤 Author
 
-* Reduce false positives
-* Improve dataset quality
-* Add deep learning model (BERT)
-* Deploy with Docker
-
----
-
-## 👨‍💻 Author
-
-Built as a portfolio project to demonstrate end-to-end AI system development.
+Matthew Sutiono — Computer Science Student
