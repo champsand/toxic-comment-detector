@@ -18,7 +18,7 @@ A full-stack AI application that detects whether a comment is toxic or non-toxic
 
 Dataset is not included due to size.
 Download it from:
-https://raw.githubusercontent.com/jigsaw-toxic-comment-classification-challenge/data/master/train.csv
+https://www.kaggle.com/datasets/waalbannyantudre/hate-speech-detection-curated-dataset
 
 ---
 
