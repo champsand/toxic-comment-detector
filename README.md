@@ -4,6 +4,13 @@ A full-stack AI application that detects toxic comments using Machine Learning (
 
 ---
 
+# Toxic Comment Detection System
+
+🌐 Live Demo: https://toxic-comment-detector-msutiono.vercel.app
+🔗 API: toxic-comment-detector-msutiono.up.railway.app
+
+---
+
 ## 🚀 Features
 
 * Detect toxic vs non-toxic comments
