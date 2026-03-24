@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toxic Comment Detector</title>
+  <title>Toxic Comment Detector v1 - Matthew Sutiono</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -34,8 +34,10 @@
         radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.04), transparent 32%),
         var(--bg);
       color: var(--text);
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: 24px;
     }
 
@@ -188,6 +190,23 @@
     .value.non-toxic {
       color: var(--success);
       text-shadow: 0 0 12px rgba(34, 197, 94, 0.26);
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b6b6b;
+      opacity: 0.8;
+    }
+    
+    .footer a {
+      color: #a2a2a2;
+      text-decoration: none;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
     }
 
     @keyframes resultReveal {
@@ -377,5 +396,11 @@
       }
     });
   </script>
+  <footer class="footer">
+    <p>
+      Built by <strong>Matthew Sutiono</strong> · v1.0 · 2026  
+      · <a href="https://github.com/champsand" target="_blank">GitHub</a>
+    </p>
+  </footer>
 </body>
 </html>
