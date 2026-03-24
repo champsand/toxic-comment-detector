@@ -1,4 +1,4 @@
-# 🧠 Toxic Comment Detection System
+# 🧠 Toxic Comment Detection System (v1)
 
 A full-stack AI web application that detects toxic comments using Machine Learning (TF-IDF + Logistic Regression), powered by a FastAPI backend and a lightweight frontend interface.
 
